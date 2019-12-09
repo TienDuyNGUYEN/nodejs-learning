@@ -1,12 +1,23 @@
 console.log('Starting notes.js');
-module.exports.age = 20; //Exporting the static number
 
-module.exports.addNote = () => {
-	console.log('addNote');
-	return 'New note';
-};
-
-module.exports.add = (a,b) => {
-	return a+b;
+var addNote = (title, body) => {
+	console.log('Adding new node', title, body);
+}
+var getAll = () => {
+	console.log('Getting all notes');
+}
+var readNote = (title) => {
+	console.log('Reading note', title);
+}
+var removeNote = (title) => {
+	console.log('Removing note',title);
+}
+module.exports ={
+	addNote,
+	getAll,
+	readNote,
+	removeNote
 }
 
+// node app.js add --title=secret --body="This is my secret"
+// node app.js list
