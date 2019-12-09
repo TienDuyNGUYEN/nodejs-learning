@@ -7,6 +7,15 @@ console.log('Starting app.');
 const fs = require('fs');
 const os = require('os');
 const notes = require('./notes.js');
+const _ = require('lodash');
+
+console.log(_.isString(true));
+console.log(_.isString('Duy'));
+console.log(_.uniq('Tien-Duy'));
+var filteredArray = _.uniq(['TienDuy',1,'Tien','Duy','TienDuy','1','2',1,2]);
+console.log(filteredArray);
+
+
 
 // var user = os.userInfo();
 // console.log(user);
@@ -25,4 +34,4 @@ const notes = require('./notes.js');
 // var res = notes.addNote();
 // console.log(res);
 
-console.log('Result:', notes.add(110,39));
+// console.log('Result:', notes.add(110,39));
