@@ -6,10 +6,27 @@ const _ = require('lodash');
 const notes = require('./notes.js');
 
 
-console.log(_.isString(true));
-console.log(_.isString('Duy'));
-//_.uniq: Get the unique item in the array
-console.log(_.uniq('Tien-Duy'));
-var filteredArray = _.uniq(['TienDuy',1,'TienDuy','Duy','TienDuy',1,2,1,2]);
-console.log(filteredArray);
-//Using Ctrl+C to stop nodemon
+//Get input from user
+//node app.js list
+//node app.js remove
+//node app.js --title="secrets 2"
+var command = process.argv[2];
+console.log('Command: ',command);
+console.log(process.argv);
+switch (command){
+	case 'add':
+		console.log('Adding new note');
+		break;
+	case 'list':
+		console.log('Listing all notes');
+		break;
+	case 'read':
+		console.log('Reading note');
+		break;
+	case 'remove':
+		console.log('Removing note');
+		break;
+	default:
+		console.log('Command note recognize');
+		break;
+}

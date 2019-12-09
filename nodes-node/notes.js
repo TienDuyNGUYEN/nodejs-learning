@@ -9,3 +9,4 @@ module.exports.addNote = () => {
 module.exports.add = (a,b) => {
 	return a+b;
 }
+
