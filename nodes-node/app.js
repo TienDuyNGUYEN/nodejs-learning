@@ -13,7 +13,15 @@ console.log('Yargs',argv);
 
 switch (command){
 	case 'add':
-		notes.addNote(argv.title, argv.body);
+		var note = notes.addNote(argv.title, argv.body);
+		if(note){
+			console.log('Node created');
+			console.log('__');
+			console.log(`Title: ${note.title}`);
+			console.log(`Body: ${note.body}`);
+		}else{
+			console.log('Node title taken');
+		}
 		break;
 	case 'list':
 		notes.getAll();
@@ -22,7 +30,10 @@ switch (command){
 		notes.readNote(argv.title);
 		break;
 	case 'remove':
-		notes.removeNote(argv.title);
+		console.log(JSON.stringify(notes));
+		var noteRemoved =  notes.removeNote(argv.title);
+		var message = noteRemoved? 'Note was remove' : 'Note not found';
+		console.log(message);
 		break;
 	default:
 		console.log('Command note recognize');
