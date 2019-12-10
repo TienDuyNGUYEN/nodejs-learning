@@ -1,12 +1,11 @@
-console.log('Starting app.');
-
+const fs = require('fs');
 const _ = require('lodash');
 const yargs = require('yargs');
 
 const notes = require('./notes.js');
 
 const argv = yargs.argv;
-var command = process.argv[2];
+var command = argv._[0];
 console.log('Command: ', command);
 console.log(process.argv);
 console.log('Yargs', argv);
@@ -22,7 +21,11 @@ switch (command) {
 		}
 		break;
 	case 'list':
-		notes.getAll();
+		var allNotes = notes.getAll();
+		console.log(`Printing ${allNotes.length} notes(s).`);
+		allNotes.forEach(note => {
+			logNote(note);
+		});
 		break;
 	case 'read':
 		var note = notes.readNote(argv.title);
