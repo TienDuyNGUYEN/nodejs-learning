@@ -38,7 +38,7 @@ switch (command) {
 		var note = notes.addNote(argv.title, argv.body);
 		if (note) {
 			console.log('Note created');
-			logNote(note);
+			notes.logNote(note);
 		} else {
 			console.log('Node title taken');
 		}
@@ -47,14 +47,14 @@ switch (command) {
 		var allNotes = notes.getAll();
 		console.log(`Printing ${allNotes.length} notes(s).`);
 		allNotes.forEach(note => {
-			logNote(note);
+			notes.logNote(note);
 		});
 		break;
 	case 'read':
 		var note = notes.readNote(argv.title);
 		if (note) {
 			console.log('Node found');
-			logNote(note);
+			notes.logNote(note);
 		} else {
 			console.log('Node not found');
 		}
@@ -70,8 +70,4 @@ switch (command) {
 		break;
 }
 
-function logNote(note) {
-	console.log('__');
-	console.log(`Title: ${note.title}`);
-	console.log(`Body: ${note.body}`);
-}
+

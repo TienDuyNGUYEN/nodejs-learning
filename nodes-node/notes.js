@@ -44,13 +44,19 @@ var removeNote = (title) => {
 	return notes.length !== filteredNode.length;
 };
 
-
+function logNote(note) {
+	console.log('__');
+	console.log(`Title: ${note.title}`);
+	console.log(`Body: ${note.body}`);
+}
 
 module.exports = {
 	addNote,
 	getAll,
 	readNote,
-	removeNote
+	removeNote,
+	logNote
+
 }
 
 
