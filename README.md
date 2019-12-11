@@ -1,2 +1,2 @@
 # nodejs-learning
-Learn nodejs, MongoDB, Mongoose and REST APIs
+Learn Nodejs, MongoDB, Mongoose and REST APIs
