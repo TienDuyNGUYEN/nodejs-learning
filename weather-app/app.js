@@ -1,42 +1,13 @@
-const yargs = require('yargs');
-const geocode = require('./geocode/geocode.js');
-const weather = require('./weather/weather.js')
+const request = require('request');
+
+const url = 'https://api.darksky.net/forecast/007d3c82c58fc972f142c6006e77055b/37.8267,-122.4233';
 
 
-const argv = yargs
-	.options({
-		a: {
-			demand: true,
-			alias: 'address',
-			describe: 'Address to get weather for',
-			string: true
-		}
-	})
-	.help()
-	.alias('help', 'h')
-	.argv;
-
-// geocode.geocodeAddress(argv.address, (errorMessage,results)=>{
-// 	if(errorMessage){
-// 		console.log(errorMessage);
-// 	} else{
-// 		console.log(results.address);
-// 		weather.getWeather(results.latitude,results.longitude,(errorMessage,weatherResults)=>{
-// 			if(errorMessage){
-// 				console.log(errorMessage);
-// 			} else{
-// 				console.log(`It's currently ${weatherResults.temperature}. It feels like ${weatherResults.apparentTemperature}`);
-// 			}
-// 		});
-		
-// 	}
-// });
-
-weather.getWeather(39.9396284,-75.18663959999999,(errorMessage,weatherResults)=>{
-	if(errorMessage){
-		console.log(errorMessage);
-	} else{
-		// console.log(JSON.stringify(weatherResults,undefined,2));
-		console.log('Done');
-	}
+//Geocoding
+//Address -> Lat/Long -> weather
+const geocodeURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1IjoidGllbmR1eS1uZ3V5ZW4iLCJhIjoiY2s0MzllMmhlMDUzaDNtbzVmMDZ5azk2diJ9.Ihh8EPoujCbudDD-aPkW6Q';
+request({url:geocodeURL,json:true},(error, response)=>{
+    const latitude = response.body.features[0].center[0];
+    const longitude = response.body.features[0].center[1];
+    console.log(latitude,longitude);
 });
