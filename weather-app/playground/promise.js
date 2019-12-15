@@ -35,7 +35,7 @@ asyncAdd(5, 5)
 		console.log('Error: ', error);
 	});
 
-//Using Async, Await, ES6
+//Using Async, Await, ES7
 var sum = (a, b)=>{
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
@@ -47,6 +47,8 @@ var sum = (a, b)=>{
 		}, 1500);
 	})
 }
+
+
 async function doGreatThing() {
 	try {
 		const firstResult = await sum(5,5);
