@@ -35,8 +35,9 @@ app.use(express.static(publicDir));
 //Now we use handle bars to make it easier
 app.get('',(req,res)=>{
     res.render('index',{
-        title:'TienDuy',
-        name:'Huong'
+        title:'Weather',
+        name:'Tien Duy NGUYEN',
+        friend:"Huong"
     });
 });
 
