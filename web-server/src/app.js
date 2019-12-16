@@ -56,20 +56,23 @@ app.get('/help',(req,res)=>{
         name: 'Tien Duy NGUYEN'
     });
 });
-app.get('/help',(req,res)=>{
-    res.send([{
-        name:'TienDuy',
-        age:26
-    },{
-        name: 'Huong',
-        age:26
-    }]);
+
+app.get('/help/*',(req,res)=>{
+    res.render('404',{
+        title: '404',
+        errorMessage:'Help article not found!'
+
+    })
 })
 
-app.get('/about',(req,res)=>{
-    res.send('About Page');
-})
+//handle error if link of page does not match
+app.get('*',(req, res)=>{
+    res.render('404',{
+        title:'404',
+        errorMessage:'Page not found'
+    })
+});
 
 app.listen(3000, ()=>{
     console.log('Server is up on port 3000');
-})
+});
