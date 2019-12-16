@@ -1,17 +1,23 @@
 const express = require('express');
 const path= require('path');
-
-
-const publicDir = path.join(__dirname,'../public');
-const viewDirPath = path.join(__dirname,'../views');
-const viewIndexFile = path.join(viewDirPath,'index.hbs');
-const viewAboutFile = path.join(viewDirPath,'about.hbs');
-const viewHelpFile = path.join(viewDirPath,'help.hbs');
+const hbs = require('hbs');
 
 const app = express();
 
+//Define paths for Express config
+const publicDir = path.join(__dirname,'../public');
+const viewPath = path.join(__dirname,'../templates/views');
+const partialsPath = path.join(__dirname,'../templates/partials');
+
+
 //Using handlebars
+//Setup handler bars engine and view locations
 app.set('view engine','hbs');
+app.set('views',viewPath);
+
+//Using patials to create functions for hbs files
+hbs.registerPartials(partialsPath);
+
 
 //use the static file from a folder
 app.use(express.static(publicDir));
@@ -28,14 +34,14 @@ app.use(express.static(publicDir));
 
 //Now we use handle bars to make it easier
 app.get('',(req,res)=>{
-    res.render(viewIndexFile,{
+    res.render('index',{
         title:'TienDuy',
         name:'Huong'
     });
 });
 
 app.get('/about',(req,res)=>{
-    res.render(viewAboutFile,{
+    res.render('about',{
         title: 'About me',
         about:'Tien Duy is a Civil Engineer. He is now working for Vinci Construction France Company in Paris.',
         name: 'Tien Duy  NGUYEN'
@@ -44,9 +50,10 @@ app.get('/about',(req,res)=>{
 
 
 app.get('/help',(req,res)=>{
-    res.render(viewHelpFile,{
+    res.render('help',{
         title: 'Help',
         helpText:'Need some help?',
+        name: 'Tien Duy NGUYEN'
     });
 });
 app.get('/help',(req,res)=>{
