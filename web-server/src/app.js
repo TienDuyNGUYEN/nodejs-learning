@@ -1,6 +1,8 @@
 const express = require('express');
 const path= require('path');
 const hbs = require('hbs');
+const forescast = require('./utils/forestcast.js');
+const geocode = require('./utils/geocode.js');
 
 const app = express();
 
@@ -56,6 +58,48 @@ app.get('/help',(req,res)=>{
         helpText:'Need some help?',
         name: 'Tien Duy NGUYEN'
     });
+});
+
+app.get('/weather',(req,res)=>{
+    if(!req.query.address){
+        return res.send({
+            error:'Yous must provide an address!'
+        })
+    }
+
+    geocode(req.query.address,(error,{latitude,longitude,location})=>{
+        if(error){
+            return res.send({error});
+        }
+        forescast(latitude, longitude, (error,forescastData)=>{
+            if(error){
+                return res.send({error});
+            }
+            res.send({
+                forescast:forescastData,
+                location,
+                address:req.query.address
+            })
+        })
+    });
+
+    // res.send({
+    //     forescast:'It is snowing',
+    //     location:'Vietnam',
+    //     address:req.query.address
+    // })
+})
+
+app.get('/products',(req,res)=>{
+    if(!req.query.search){
+        res.send({
+            error: 'Yous must provide a search term'
+        })
+    } 
+    res.send({
+        products:[]
+    })
+   
 });
 
 app.get('/help/*',(req,res)=>{
