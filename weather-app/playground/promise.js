@@ -17,7 +17,7 @@ var asyncAdd = (a, b) => {
 
 asyncAdd(5, 5)
 	.then((res) => {
-		console.log('Result: ', res);
+		console.log('Result: ', res);git
 		return asyncAdd(res, 33);
 	}).then((res) => {
 		console.log('Result2:', res);
