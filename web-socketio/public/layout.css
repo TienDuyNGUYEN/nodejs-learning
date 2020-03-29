@@ -1,0 +1,20 @@
+body{background-color : #FFFFFF}
+#wrapper{width: 600px;margin:auto}
+#txtUsername{background-color: transparent;border: solid 1px #5dbcd2;width: 300px;}
+#btnRegister{border: solid 1px #5dbcd2; width: 80px;}
+
+#left,#right{min-height:300px}
+#left{width: 30%;float:left;}
+#right{width: 70%; float:right; background-color: #d4f9f8; text-align: right}
+
+#boxTitle{border:solid 1px #5dbcd2; padding:5px; text-align:left; font-weight: bold;background-color: #f0f2d0}
+#boxContent{border:solid 1px #5dbcd2; border-top:none; padding:5px; text-align:left;background-color: #f0f2d0}
+#btnLogout{border: solid 1px #5dbcd2; width: 80px;}
+#sayHi{text-align:right; font-weight: bold;}
+#listMessages{height: 300px; background-color: #fecad4;padding: 0px; text-align: left;overflow: scroll}
+#textMessage{background: transparent; border:solid 1px #5dbcd2;text-align: left;float:left;width: 70%;}
+#btnSendMessage{border: solid 1px #5dbcd2; width: 80px;}
+.notify{font-size: xx-small; font-style: italic;text-align: left;float: left;}
+.mr-4{
+    margin-right: 4px;
+}

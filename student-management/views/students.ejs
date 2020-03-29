@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        crossorigin="anonymous">
+    <link rel="icon" href="../img/management.png">
+</head>
+
+<body>
+    <div class='container mt-5 table-sm table-bordered'>
+        <h2 class='text-center bg-primary'>Student List</h2>
+        <a class="btn bg-warning float-right mb-2" href="./add" role="button">Add new student</a>
+        <table class="table mt-2">
+            <thead class="bg-primary text-light">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.rows.forEach(function(stu){%>
+                <tr>
+                    <td><%= stu.id %> </td>
+                    <td><%= stu.name %> </td>
+                    <td><%= stu.email  %> </td>
+                    <td>
+                        <a href='/student/edit/<%= stu.id %>'>Edit</a> -
+                        <a href='/student/delete/<%= stu.id %>'>Delete</a>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

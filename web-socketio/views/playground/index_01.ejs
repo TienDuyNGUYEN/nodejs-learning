@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Web real time</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        crossorigin="anonymous">
+    <script src="socket.io/socket.io.js"></script>
+
+    
+
+
+    <script>
+        //Phone to server
+        const socket = io('http://localhost:3000/');
+        
+       socket.on('Server-send-data',function(data){
+        document.querySelector('#content1').append(data + ',\n');
+        console.log(data);
+       });
+
+        window.addEventListener("DOMContentLoaded", (event) => {
+            console.log('Start page');
+
+            const mrA = document.querySelector('#mrA').addEventListener('click', function (e) {
+                socket.emit('Client-send-data','HELLO-MRA');
+
+            }); //Clien-sen-data la 1 parameter, chung ta se goi lai trong server-side
+
+
+        });
+
+        //Play ground:
+        //io.sockets.emit: server get gui lai tat ca cac thang con co lien ket toi server: vs chat group
+        //socket.emit: server chi tra lai thang da phat tien hieu len
+        //socket.broadcast.emit: thang A gui cho nhung thang xung quanh: vd: A gui tin nhan cho B,C,D
+    </script>
+</head>
+
+<body>
+    <div className ='container'>
+        <div>
+            <h3>Hello World</h3>
+            <br>
+        </div>
+        <button id="mrA">Click Send</button>
+        <br>
+        <h5 id ='content1'></h5>
+    </div>
+</body>
+
+</html>

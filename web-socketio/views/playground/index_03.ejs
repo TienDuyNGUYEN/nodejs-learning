@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Web Chat</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        crossorigin="anonymous">
+    <link rel='stylesheet' type='text/css' href='layout.css'>
+
+    <script src="socket.io/socket.io.js"></script> <!--goi ra socket.io de khach hang co the connect dc-->
+    <script src="socket.js"></script> <!--Vi file  public la express_static, nen ta co the su dung truc tiep file trong nhung cai nay-->
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">TienDuy</a>
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    <div id='wrapper' class='mt-5'>
+        <div id='loginForm'>
+            <form class="text-left border border-light mt-5 mb-5" action="#!">
+                <p class="h4 mb-3 text-left">What is your name?</p>
+                <input type="text" id="txtUsername" class = 'mr-1' placeholder="Enter your name">
+                <input type='button' id='btnRegister' Value='Register'>
+            </form>
+        </div>
+        <div id='chatForm'>
+            <div id='left'>
+                <div id='boxTitle'>User online</div>
+                <div id= 'boxContent'>
+                </div>
+            </div>
+            <div id='right'>
+                <div id='sayHi'>
+                    Hello <span id='currentUser'>Duy</span>
+                    <input type='button' id='btnLogout' class = 'mb-2' value='Logout'>
+                </div>
+                <div id='listMessages'>
+                </div>
+                <div id='notification'></div>
+                <br>
+                <input type='text' id='textMessage'>
+                <input type='button' id='btnSendMessage' value='Send'>
+            </div>
+        </div>
+    </div>  
+</body>
+
+</html>
