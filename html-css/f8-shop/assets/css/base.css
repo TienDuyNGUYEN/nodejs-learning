@@ -18,8 +18,8 @@
 
     --header-height:120px;
     --navbar-height:34px;
-    --header-with-search:calc(var(--header-height)-var(--navbar-height));
-
+    --header-with-search:calc(var(--header-height) - var(--navbar-height));
+    --header-sort-bar-height:46px
 }
 
 * {
@@ -33,19 +33,6 @@ html {
     font-family: 'Roboto', sans-serif;
     /* Neu font-size 62.5% thi sau do ta test fontsize 1.2 rem se la 12px */
     box-sizing: border-box;
-}
-
-/* Reponsive */
-.grid {
-    width: 1200px;
-    max-width: 100%;
-    margin: 0 auto;
-    /*Tren duoi 0, traiphai auto*/
-}
-
-/* Se su dung trong truong hop khong muon dung grid 1200px */
-.grid__full-width {
-    width: 100%;
 }
 
 .grid__row {
@@ -235,6 +222,8 @@ html {
     list-style: none;
     margin:0 8px;
 }
+
+
 .pagination-item__link{
     --height:30px;
     text-decoration: none;

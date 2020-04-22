@@ -100,15 +100,15 @@ body {
 }
 
 .feature-item:nth-child(1) {
-    background-color: rgb(192, 227, 222);
+    background-color: #c0e3de;
 }
 
 .feature-item:nth-child(2) {
-    background-color: rgb(227, 200, 192);
+    background-color: #e3c8c0;
 }
 
 .feature-item:nth-child(3) {
-    background-color: rgb(226, 192, 227);
+    background-color: #e2c0e3;
 }
 
 
