@@ -1,0 +1,30 @@
+@import "layouts/variables";
+@import "home/posts";
+
+.slider_show {
+    .slider_img {
+        width: 100%;
+    }
+}
+
+.section-wrapper {
+    width: 100%;
+
+    .title {
+        font-size: 1.25rem;
+        padding-bottom: 7.5px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        border-bottom: 2px solid $primary;
+
+        a {
+            text-decoration: none;
+            color: $dark;
+        }
+    }
+}
+
+.posts {
+    @import "blog/main-post";
+    @import 'blog/second-post';
+}

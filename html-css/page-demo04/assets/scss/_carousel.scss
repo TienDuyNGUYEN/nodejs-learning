@@ -1,0 +1,32 @@
+@import "layouts/variables";
+
+.owl-carousel {
+
+    .carousel-item {
+        padding: 15vw 0;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .owl-nav {
+        button.owl-prev, button.owl-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            outline: none;
+
+            i {
+                color: white;
+                font-size: 1.5rem;
+            }
+        }
+
+        .owl-prev {
+            left: 10px;
+        }
+
+        .owl-next {
+            right: 10px;
+        }
+    }
+}

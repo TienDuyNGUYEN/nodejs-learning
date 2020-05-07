@@ -1,0 +1,36 @@
+&.videos {
+    display: flex;
+    flex-wrap: wrap;
+
+    .post-item {
+        flex-basis: 50%;
+        max-width: 50%;
+        padding-right: 10px;
+
+        &:nth-child(even) {
+            padding-right: 0;
+        }
+
+        @media (max-width: 991px) {
+            flex-basis: 100%;
+            max-width: 100%;
+            padding-right: 0;
+        }
+
+        .box-image {
+            &.video {
+                position: relative;
+
+                i {
+                    position: absolute;
+                    color: white;
+                    font-size: 2.5rem;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+
+        }
+    }
+}

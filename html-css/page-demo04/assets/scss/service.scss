@@ -1,0 +1,104 @@
+@import "layouts/variables";
+
+.service {
+    padding-top: 50px;
+
+    .slider_show {
+        .slider_img {
+            width: 100%;
+        }
+    }
+
+    .service-section {
+        display: initial;
+
+        .title {
+            padding-top: 30px;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            border-bottom: 2px solid #A4CD40;
+            font-size: 24px;
+        }
+    }
+
+    .box-services {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+
+        .box-service__item {
+            flex-basis: calc(33.33% - 10px);
+            margin-right: 15px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border-radius: 5px;
+
+            &:nth-child(3n) {
+                margin-right: 0;
+            }
+
+            @include for-tablet {
+                flex-basis: calc(50% - 7.5px);
+                width: calc(50% - 7.5px);
+
+                &:nth-child(2n) {
+                    margin-right: 0;
+                }
+
+                &:nth-child(3n) {
+                    margin-right: 15px;
+                }
+            }
+
+            @include for-small-tablet {
+                width: 100%;
+                flex-basis: 100%;
+                margin-right: 0;
+
+                &:nth-child(3n) {
+                    margin-right: 0;
+                }
+            }
+
+            &:hover {
+                .service__thumb {
+                    @extend .shine-hover;
+                }
+            }
+
+            .service__thumb {
+                position: relative;
+                display: flex;
+                flex-flow: column;
+                @extend .shine;
+
+                img {
+                    max-height: 220px;
+                    min-height: 220px;
+                    object-fit: cover;
+                    width: 100%;
+                }
+            }
+
+            .service__title {
+                background-color: $second-dark;
+                color: $bg-white;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                text-align: center;
+                padding: 10px 8px;
+                font-weight: 400;
+                font-size: 1rem;
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+@keyframes shine {
+    100% {
+        left: 125%;
+    }
+}

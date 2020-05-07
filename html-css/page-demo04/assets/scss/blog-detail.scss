@@ -1,0 +1,186 @@
+@import "layouts/variables";
+
+body {
+    background: $bg-main;
+}
+
+.single-wrapper {
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    .post-container {
+        background-color: white;
+        padding: 20px 30px 30px;
+        @include for-desktop {
+            max-width: 73%;
+            flex-basis: 73%;
+        }
+        @include for-tablet {
+            max-width: 100%;
+            flex-basis: 100%;
+        }
+        @include for-mobile {
+            padding: 10px 15px 15px;
+        }
+
+        .post-header {
+            padding-bottom: 20px;
+
+            .post-header__title {
+                font-size: 1.7rem;
+                font-weight: 500;
+            }
+
+            .post-header__metas {
+                display: flex;
+                justify-content: space-between;
+                border-bottom: 2px solid $primary-1;
+                padding-bottom: 10px;
+
+                .metas__time {
+                    display: flex;
+                    align-items: center;
+
+                    i {
+                        color: $second;
+                        font-size: 1rem;
+                        margin-right: 5px;
+                    }
+
+                    span {
+                        margin-right: 8px;
+
+                        &:last-child {
+                            margin-right: 0;
+                        }
+                    }
+
+                    font-size: .8rem;
+                    color: $dark-700;
+                    font-weight: 300;
+                }
+            }
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin: 10px 0;
+        }
+
+        .wp-caption {
+            max-width: 100% !important;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto !important;
+            display: inline-block;
+        }
+    }
+
+
+    @import "home/posts";
+
+    .post-sidebar {
+        @include for-tablet {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    .post-sidebar__right {
+        background-color: white;
+        margin-left: 2%;
+        padding: 20px;
+        @media (max-width: 991px) {
+            margin-left: 0;
+            margin-top: 2%;
+        }
+
+        .title {
+            font-size: 1.25rem;
+            padding-bottom: 7.5px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #A4CD40;
+        }
+
+        .posts {
+            display: flex;
+            flex-wrap: wrap;
+
+            .post-item {
+                @include for-tablet {
+                    width: 50%;
+                    flex-basis: 50%;
+                    &:nth-child(odd) {
+                        padding-right: 10px;
+                    }
+                    &:nth-child(even) {
+                        padding-left: 10px;
+                    }
+                }
+
+                @include for-mobile {
+                    width: 100%;
+                    flex-basis: 100%;
+                    &:nth-child(even), &:nth-child(odd) {
+                        padding-left: 0;
+                        padding-right: 0;
+                    }
+                }
+
+                .post-wrapper {
+                    flex-direction: column;
+                    @include for-tablet {
+                        //padding: 0 10px;
+                    }
+                    @include for-mobile {
+                        padding: 0;
+                        flex-direction: row;
+                    }
+                    @include for-small-mobile {
+                        flex-direction: column;
+                    }
+
+                    &:hover {
+                        .box-image {
+                            img {
+                                transform: scale(1.2) rotate(5deg);
+                            }
+                        }
+                    }
+
+                    .box-image {
+                        width: 100%;
+                        margin-bottom: 10px;
+                        overflow: hidden;
+                        @include for-tablet {
+                            max-width: 100%;
+                            max-height: 200px;
+                        }
+                        @include for-mobile {
+                            max-width: 250px;
+                            max-height: 150px;
+                            margin-right: 10px;
+                            margin-bottom: 0;
+                        }
+                        @include for-small-mobile {
+                            max-width: 100%;
+                            max-height: 220px;
+                            margin-bottom: 10px;
+                        }
+
+                        img {
+                            transition: transform 0.3s;
+                        }
+                    }
+
+                    > .post-metas {
+                        padding-left: 0;
+                    }
+                }
+            }
+
+        }
+    }
+}
