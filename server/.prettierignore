@@ -1,0 +1,10 @@
+# Add files here to ignore them from prettier formatting.
+
+/dist
+/coverage
+
+# VSCode.
+.vscode
+.github/
+nodemon.json
+package.json
