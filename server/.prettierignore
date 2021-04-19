@@ -8,3 +8,5 @@
 .github/
 nodemon.json
 package.json
+/node_modules
+/prisma

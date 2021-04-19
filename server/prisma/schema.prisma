@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  USER
+  TEACHER
+}
+
+model User {
+  id                        String   @id @default(cuid())
+  username                  String   @unique
+  email                     String   @unique
+  password                  String
+  firstName                 String?
+  lastName                  String?
+  age                       Int?
+  role                      Role     @default(USER)
+  currentHashedRefreshToken String?
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  formations           Formation[]
+  formationAttendances FormationAttendance[]
+  @@map("users")
+}
+
+model Category {
+  id   String @id @default(cuid())
+  name String @unique
+
+  formations Formation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("categories")
+}
+
+model Room {
+  id                String             @id @default(cuid())
+  name              String             @unique
+  formationSessions FormationSession[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("rooms")
+}
+
+model Formation {
+  id                   String                @id @default(cuid())
+  title                String
+  description          String?
+  teacher              User                  @relation(fields: [teacherId], references: [id])
+  teacherId            String
+  categories           Category[]
+  formationSessions    FormationSession[]
+  formationAttendences FormationAttendance[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("formations")
+}
+
+model FormationSession {
+  id                   String                @id @default(cuid())
+  startDate            DateTime
+  endDate              DateTime
+  capacity             Int?                  @default(25)
+  formationAttendences FormationAttendance[]
+
+  room        Room      @relation(fields: [roomId], references: [id])
+  roomId      String
+  formation   Formation @relation(fields: [formationId], references: [id])
+  formationId String
+
+  @@map("formation_sessions")
+}
+
+model FormationAttendance {
+  id   String @id @default(cuid())
+  mark Int?
+
+  formationSession   FormationSession? @relation(fields: [formationSessionId], references: [id])
+  formationSessionId String?
+  user               User              @relation(fields: [userId], references: [id])
+  userId             String
+  formation          Formation?        @relation(fields: [formationId], references: [id])
+  formationId        String?
+  @@map("formation_attendances")
+}

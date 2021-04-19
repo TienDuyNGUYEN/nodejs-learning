@@ -28,11 +28,6 @@ export const envConfig = (): EnvConfig => {
       sendgridApiKey: process.env.SENDGRID_API_KEY,
       emailSender: process.env.EMAIL_AUTH_USER || 'your-email@yopmail.com',
     },
-    cloudinary: {
-      cloudName: process.env.CLOUDINARY_NAME,
-      apiKey: process.env.CLOUDINARY_API_KEY,
-      secret: process.env.CLOUDINARY_SECRET,
-    },
   };
 };
 
@@ -53,10 +48,5 @@ export interface EnvConfig {
   email: {
     sendgridApiKey: string;
     emailSender: string;
-  };
-  cloudinary: {
-    cloudName: string;
-    apiKey: string;
-    secret: string;
   };
 }

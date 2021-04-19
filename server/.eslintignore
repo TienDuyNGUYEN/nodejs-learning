@@ -4,3 +4,4 @@ tsconfig.json
 test/
 *spec.ts
 *.config.js
+seed.ts
