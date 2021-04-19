@@ -1,2 +1,3 @@
-# nodejs-learning
-Learn Nodejs, MongoDB, Mongoose and REST APIs
+# Training management
+
+Training management system Nodejs-React (TypeScript)
