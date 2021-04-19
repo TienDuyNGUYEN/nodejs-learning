@@ -1,4 +1,5 @@
 import app from './app';
+import { prismaService } from 'src/providers/db';
 
 export async function main() {
   app.listen(app.get('port'), () => {
@@ -6,7 +7,7 @@ export async function main() {
   });
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error(err);
-  // db.close();
+  await prismaService.$disconnect();
 });
