@@ -6,13 +6,26 @@ import handler from 'express-async-handler';
 import { LoginUserDto, RegisterUserDto } from './dto';
 
 const authRouter = express.Router();
-const authController = container.resolve(AuthController);
 
 // Login
-authRouter.post('/auth/login', validationMiddleware(LoginUserDto), handler(authController.login));
+authRouter.post(
+  '/auth/login',
+  validationMiddleware(LoginUserDto),
+  handler((req, res) => {
+    const authController = container.resolve(AuthController);
+    authController.login(req, res);
+  }),
+);
 
 // Register
-authRouter.post('/auth/register', validationMiddleware(RegisterUserDto), handler(authController.register));
+authRouter.post(
+  '/auth/register',
+  validationMiddleware(RegisterUserDto),
+  handler((req, res) => {
+    const authController = container.resolve(AuthController);
+    authController.register(req, res);
+  }),
+);
 
 export { authRouter };
 export default authRouter;

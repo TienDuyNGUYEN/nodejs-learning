@@ -4,7 +4,8 @@ import { AppModule } from './app';
 
 export async function main() {
   const appModule = new AppModule();
-  appModule.listen(appModule.app.get('port'));
+  const port = Number(process.env.PORT) || 4014;
+  appModule.listen(port);
 }
 
 main().catch(async (err) => {

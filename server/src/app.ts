@@ -8,8 +8,8 @@ import { sessionConfig } from './common/configs/session.config';
 import { envConfig } from './common/configs/env.config';
 import { errorMiddleware } from '@common/middlewares';
 import notFoundMiddleware from '@common/middlewares/not-found.middleware';
-import { container, injectable } from 'tsyringe';
-import { AppController } from './app.controller';
+import { injectable } from 'tsyringe';
+import appRouter from './app.routes';
 
 @injectable()
 export class AppModule {
@@ -17,10 +17,11 @@ export class AppModule {
   public app: express.Application;
 
   constructor() {
-    this.app = this.build();
+    this.app = express();
   }
 
   public listen(port: number) {
+    this.app = this.build();
     this.app.listen(port, () => {
       console.log('\x1b[36m%s\x1b[0m', `🌏 Express server started at http://localhost:${port}`);
     });
@@ -32,7 +33,7 @@ export class AppModule {
     this.app.use(compression());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
-    this.app.set('port', process.env.PORT || 4014);
+
     this.app.use(cors());
 
     if (this.env.mode === 'production') {
@@ -75,20 +76,21 @@ export class AppModule {
 
     // Init routes
     // Home route
-    this.app.get('/', (req, res) => {
-      res.send('Hi there!');
-    });
+    // this.app.get('/', (req, res) => {
+    //   res.send('Hi there!');
+    // });
 
-    this.app.get('/health', (req, res) => {
-      res.status(200).send();
-    });
+    // this.app.get('/health', (req, res) => {
+    //   res.status(200).send();
+    // });
 
     // Loop through all controller of app and initialize router
-    const appController = container.resolve(AppController);
+    // const appController = container.resolve(AppController);
 
-    appController.all.forEach((c) => {
-      this.app.use('/api', c.router);
-    });
+    // appController.all.forEach((c) => {
+    //   this.app.use('/api', c.router);
+    // });
+    this.app.use(appRouter);
 
     // Handle not found error
     this.app.use(notFoundMiddleware);
