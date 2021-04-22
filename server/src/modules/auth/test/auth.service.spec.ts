@@ -1,5 +1,5 @@
+import { User } from '@prisma/client';
 import { BadRequestException, ConflictException } from 'src/common/exceptions';
-import { User } from 'src/modules/user/user.model';
 import { AuthService } from '../services/auth.service';
 
 const email = 'some-email@gmail.com';
@@ -26,11 +26,7 @@ describe('Unit tests: AuthService', () => {
   };
 
   beforeAll(() => {
-    authService = new AuthService(
-      mockUserService,
-      mockPasswordService,
-      mockDbService,
-    );
+    authService = new AuthService(mockUserService, mockPasswordService, mockDbService);
   });
 
   it('Should be defined', () => {

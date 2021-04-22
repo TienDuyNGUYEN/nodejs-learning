@@ -6,6 +6,9 @@ export interface HttpContext {
   res: Response;
 }
 
+export interface HttpController {
+  router: any;
+}
 export interface PayloadUserForJwtToken {
   user: UserFromRequest;
 }
