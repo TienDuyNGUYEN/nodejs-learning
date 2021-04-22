@@ -8,6 +8,8 @@ import { sessionConfig } from './common/configs/session.config';
 import { envConfig } from './common/configs/env.config';
 import { useContainer } from 'class-validator';
 import { errorMiddleware } from '@common/middlewares';
+import appRouter from './app.routes';
+import notFoundMiddleware from '@common/middlewares/not-found.middleware';
 
 const app = express();
 const env = envConfig();
@@ -15,17 +17,9 @@ const env = envConfig();
 // Middlewares
 app.use(compression());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.set('port', process.env.PORT || 4014);
 app.use(cors());
-
-// Allow inject dependencies in class-validator
-useContainer(app, { fallbackOnErrors: true });
-
-// Home route
-app.get('/', (req, res) => {
-  res.send('Hi there!');
-});
 
 if (env.mode === 'production') {
   app.set('trust proxy', 1); // trust first cookie
@@ -64,6 +58,12 @@ if (env.mode === 'production') {
 const sessionOptions = sessionConfig();
 app.use(session(sessionOptions));
 
+// Init routes
+app.use(appRouter);
+
+// Handle not found error
+
+app.use(notFoundMiddleware);
 // Error handler - always put in the end
 app.use(errorMiddleware);
 

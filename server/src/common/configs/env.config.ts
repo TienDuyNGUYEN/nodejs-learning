@@ -21,7 +21,6 @@ export const envConfig = (): EnvConfig => {
     jwt: {
       jwtSecret: process.env.JWT_SECRET || `some-very-strong-secret`,
       jwtExpiredTime: parseInt(process.env.JWT_EXPIRED_TIME) || 7200,
-      jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || `some-very-strong-secret`,
       jwtRefreshExpiredTime: parseInt(process.env.JWT_REFRESH_EXPIRED_TIME) || 2592000,
     },
     email: {
@@ -42,7 +41,6 @@ export interface EnvConfig {
   jwt: {
     jwtSecret: string;
     jwtExpiredTime: number;
-    jwtRefreshSecret: string;
     jwtRefreshExpiredTime: number;
   };
   email: {

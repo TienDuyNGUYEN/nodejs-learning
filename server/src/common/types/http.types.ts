@@ -1,11 +1,6 @@
-import { User } from '@prisma/client';
+import { RoleType, User } from '@prisma/client';
 import { Request, Response } from 'express';
 
-export enum RoleType {
-  ADMIN = 'ADMIN',
-  USER = 'USER',
-  TEACHER = 'TEACHER',
-}
 export interface HttpContext {
   req: Request;
   res: Response;

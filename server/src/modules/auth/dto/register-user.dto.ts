@@ -15,7 +15,7 @@ export class RegisterUserDto {
   age?: number;
 
   @IsString()
-  @Matches(/[a-zA-Z0-9_-\.]{2,30}/)
+  @Matches(/[a-zA-Z0-9_\.-]{2,30}/)
   @Validate(UserExitsValidator)
   username!: string;
 

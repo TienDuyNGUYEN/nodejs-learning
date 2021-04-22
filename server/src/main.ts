@@ -1,5 +1,6 @@
+import 'reflect-metadata';
 import app from './app';
-import { prismaService } from 'src/providers/prisma.service';
+import { prismaClient } from 'src/providers/prisma.service';
 
 export async function main() {
   app.listen(app.get('port'), () => {
@@ -9,5 +10,5 @@ export async function main() {
 
 main().catch(async (err) => {
   console.error(err);
-  await prismaService.$disconnect();
+  await prismaClient.$disconnect();
 });
