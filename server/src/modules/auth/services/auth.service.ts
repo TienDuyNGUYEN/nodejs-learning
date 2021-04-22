@@ -1,75 +1,37 @@
 import { injectable } from 'tsyringe';
-import { BadRequestException, ConflictException } from 'src/common/exceptions';
 import { PasswordService } from './password.service';
 import { PrismaClient, User } from '@prisma/client';
-import { prismaService } from 'src/providers/db';
+import { PrismaService } from 'src/providers/prisma.service';
+import { LoginUserDto, RegisterUserDto } from '../dto';
+import { emailRegex } from '@common/types';
+import { BadRequestException } from '@common/exceptions';
 
 @injectable()
 export class AuthService {
   private _db: PrismaClient;
-  constructor(private passwordService: PasswordService) {
-    this._db = prismaService;
+  constructor(prismaService: PrismaService, private passwordService: PasswordService) {
+    this._db = prismaService.client;
   }
 
-  public async registerUser(data: RegisterUserDto): Promise<User> {
-    const { email, first_name, last_name, birthdate, city, country, street, zip } = data;
-    const check = await this.userService.getUserByEmail(email);
-    if (check) {
-      throw new ConflictException(`User with email ${email} already existed`);
-    }
-
-    let password = await this.passwordService.hash(data.password);
-
-    const userTemp = new User({
-      email,
-      password,
-      first_name,
-      last_name,
-      birthdate,
-      street,
-      city,
-      country,
-      zip,
+  public async registerUser(input: RegisterUserDto): Promise<User> {
+    const user = await this._db.user.create({
+      data: { ...input, password: await this.passwordService.hash(input.password) },
     });
-    const mutation = `
-    INSERT INTO "users" (email, password, first_name, last_name, 
-                        full_name, birthdate, street, 
-                        city, country, zip, status, 
-                        createdAt, updatedAt)
-
-                VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);
-    `;
-    const values = [
-      email,
-      password,
-      first_name,
-      last_name,
-      userTemp.full_name,
-      birthdate,
-      street,
-      city,
-      country,
-      zip,
-      'ACTIVE',
-      userTemp.createdAt,
-      userTemp.updatedAt,
-    ];
-
-    await this._db.run(mutation, values);
-    const userCreated: User = await this._db.get(`SELECT * from "users" WHERE email='${email}'`);
-    return userCreated;
+    return user;
   }
 
-  public async loginUser(data: LoginUserDto): Promise<User> {
-    const { email, password } = data;
-    const user: User = await this.userService.getUserByEmail(email);
-    if (!user) {
-      throw new BadRequestException('Invalid credentials');
-    }
+  public async loginUser(input: LoginUserDto): Promise<User> {
+    const { usernameOrEmail, password } = input;
+    const isEmail = emailRegex.test(usernameOrEmail);
+    let user: User;
+    if (isEmail) user = await this._db.user.findUnique({ where: { email: usernameOrEmail } });
+    else user = await this._db.user.findUnique({ where: { username: usernameOrEmail } });
+    if (!user) throw new BadRequestException('Invalid credentials');
+
+    // check password
     const isMatch = await this.passwordService.verify(user.password, password);
-    if (!isMatch) {
-      throw new BadRequestException('Invalid credentials');
-    }
+    if (!isMatch) throw new BadRequestException('Invalid credentials');
+
     return user;
   }
 }

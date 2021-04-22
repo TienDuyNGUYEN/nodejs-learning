@@ -6,15 +6,23 @@ import RateLimit from 'express-rate-limit';
 import session from 'express-session';
 import { sessionConfig } from './common/configs/session.config';
 import { envConfig } from './common/configs/env.config';
+import { useContainer } from 'class-validator';
+import { errorMiddleware } from '@common/middlewares';
 
 const app = express();
 const env = envConfig();
 
+// Middlewares
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 4014);
 app.use(cors());
+
+// Allow inject dependencies in class-validator
+useContainer(app, { fallbackOnErrors: true });
+
+// Home route
 app.get('/', (req, res) => {
   res.send('Hi there!');
 });
@@ -52,8 +60,11 @@ if (env.mode === 'production') {
   console.log = function () {};
 }
 
-// Session
+// Register session
 const sessionOptions = sessionConfig();
 app.use(session(sessionOptions));
+
+// Error handler - always put in the end
+app.use(errorMiddleware);
 
 export default app;

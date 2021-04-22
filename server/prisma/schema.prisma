@@ -10,7 +10,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-enum Role {
+enum RoleType {
   ADMIN
   USER
   TEACHER
@@ -24,7 +24,7 @@ model User {
   firstName                 String?
   lastName                  String?
   age                       Int?
-  role                      Role     @default(USER)
+  role                      RoleType @default(USER)
   currentHashedRefreshToken String?
   createdAt                 DateTime @default(now())
   updatedAt                 DateTime @updatedAt

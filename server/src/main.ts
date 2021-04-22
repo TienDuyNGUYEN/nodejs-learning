@@ -1,5 +1,5 @@
 import app from './app';
-import { prismaService } from 'src/providers/db';
+import { prismaService } from 'src/providers/prisma.service';
 
 export async function main() {
   app.listen(app.get('port'), () => {

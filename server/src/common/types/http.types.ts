@@ -1,6 +1,11 @@
-import { Role, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import { Request, Response } from 'express';
 
+export enum RoleType {
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+  TEACHER = 'TEACHER',
+}
 export interface HttpContext {
   req: Request;
   res: Response;
@@ -16,7 +21,7 @@ export interface DataStoredFromToken {
 
 export interface UserFromRequest extends Partial<User> {
   id?: string;
-  role?: Role;
+  role?: RoleType;
   email?: string;
   username?: string;
   password?: string;

@@ -1,13 +1,17 @@
-declare namespace Express {
+import { UserFromRequest } from '@common/types';
+import 'express-session';
+import 'express';
+
+declare module 'express' {
   interface Request {
-    session?: {
-      authToken?: {
-        accessToken?: string;
-        refreshToken?: string;
-      };
-      cart?: any;
-      destroy: () => void;
-      res: Response;
+    user?: UserFromRequest;
+  }
+}
+declare module 'express-session' {
+  interface SessionData {
+    authToken?: {
+      accessToken?: string;
+      refreshToken?: string;
     };
   }
 }
