@@ -14,10 +14,16 @@ import { AppController } from './app.controller';
 @injectable()
 export class AppModule {
   private env = envConfig();
-  public app = express();
+  public app: express.Application;
 
   constructor() {
-    this.build();
+    this.app = this.build();
+  }
+
+  public listen(port: number) {
+    this.app.listen(port, () => {
+      console.log('\x1b[36m%s\x1b[0m', `🌏 Express server started at http://localhost:${port}`);
+    });
   }
 
   public build() {
@@ -76,16 +82,20 @@ export class AppModule {
     this.app.get('/health', (req, res) => {
       res.status(200).send();
     });
+
+    // Loop through all controller of app and initialize router
     const appController = container.resolve(AppController);
+
     appController.all.forEach((c) => {
       this.app.use('/api', c.router);
     });
 
     // Handle not found error
-
     this.app.use(notFoundMiddleware);
+
     // Error handler - always put in the end
     this.app.use(errorMiddleware);
+
     return this.app;
   }
 }

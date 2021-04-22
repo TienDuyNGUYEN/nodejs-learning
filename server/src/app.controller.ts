@@ -14,8 +14,10 @@ export class AppController {
   }
 
   private _getAllController() {
+    // Init new class of controllers  (with DI)
     const authController = container.resolve(AuthController);
 
+    // Update list controllers
     this._appControllers.push(authController);
   }
 }

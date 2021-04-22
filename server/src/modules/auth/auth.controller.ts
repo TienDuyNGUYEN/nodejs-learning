@@ -2,7 +2,7 @@ import { User } from '.prisma/client';
 import { validationMiddleware } from '@common/middlewares/validation.middleware';
 import { mapUserOutput } from '@modules/user/utils/map-user.out';
 import express from 'express';
-import { injectable } from 'tsyringe';
+import { container, injectable } from 'tsyringe';
 import { LoginUserDto, RegisterUserDto } from './dto';
 import { AuthService } from './services/auth.service';
 import { JwtService } from './services/jwt.service';
@@ -23,6 +23,10 @@ export class AuthController {
 
   // ------------------------Private handler-------------------------
   private async login(req, res) {
+    console.log(this);
+    if (!this.authService) this.authService = container.resolve(AuthService);
+    if (!this.jwtService) this.jwtService = container.resolve(JwtService);
+
     const input = req.body as LoginUserDto;
     const user: User = await this.authService.loginUser(input);
 
@@ -34,6 +38,9 @@ export class AuthController {
   }
 
   private async register(req, res) {
+    if (!this.authService) this.authService = container.resolve(AuthService);
+    if (!this.jwtService) this.jwtService = container.resolve(JwtService);
+
     const input = req.body as RegisterUserDto;
     const user: User = await this.authService.registerUser(input);
 
