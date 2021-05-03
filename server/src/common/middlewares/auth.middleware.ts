@@ -7,19 +7,18 @@ import handler from 'express-async-handler';
 export function authMiddleware(): RequestHandler {
   return handler(async (req: Request, res: Response, next: NextFunction) => {
     try {
-      if (!req.session?.authToken) {
+      const bearerToken = req.headers['authorization'];
+      if (!bearerToken) {
         throw new ForbiddenException('Unauthorized!');
       }
-      const { authToken } = req.session;
+      const token = bearerToken.split(' ')[1];
 
-      if (!authToken) throw new ForbiddenException('Token invalid or missing');
+      if (!token) throw new ForbiddenException('Token invalid');
 
       const jwtService = container.resolve(JwtService);
-      const { user } = jwtService.verify(authToken?.accessToken);
+      const { user } = jwtService.verify(token);
 
-      if (!user) throw new ForbiddenException('Token invalid or missing');
-
-      req.user = user;
+      if (!user) throw new ForbiddenException('Token invalid');
       next();
     } catch (error) {
       next(error);

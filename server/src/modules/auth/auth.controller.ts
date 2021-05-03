@@ -1,8 +1,8 @@
 import { User } from '.prisma/client';
-import { PayloadUserForJwtToken } from '@common/types';
+import { PayloadUserForJwtToken, UserFromRequest } from '@common/types';
 import { mapUserOutput } from '@modules/user/utils/map-user-output';
 import { mapUserPayload } from '@modules/user/utils/map-user-payload';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { injectable } from 'tsyringe';
 import { LoginUserDto, RegisterUserDto } from './dto';
 import { AuthService } from './services/auth.service';
@@ -14,7 +14,7 @@ export class AuthController {
 
   constructor(private authService: AuthService, private jwtService: JwtService) {}
 
-  public async login(req, res) {
+  public async login(req: Request, res: Response) {
     const input = req.body as LoginUserDto;
     const user: User = await this.authService.loginUser(input);
 
@@ -24,19 +24,53 @@ export class AuthController {
 
     const accessToken = this.jwtService.sign(payload);
     const refreshToken = this.jwtService.sign(payload, true);
-    req.session.authToken = { accessToken, refreshToken };
-
+    this.authService.resetCurrentHashedToken(user.id, refreshToken);
+    this.sendRefreshToken(res, accessToken);
+    res.setHeader('authorization', `Bearer ${accessToken}`);
     res.send({ user: mapUserOutput(user), authToken: { accessToken } });
   }
 
-  public async register(req, res) {
+  public async register(req: Request, res: Response) {
     const input = req.body as RegisterUserDto;
     const user: User = await this.authService.registerUser(input);
+    const payload: PayloadUserForJwtToken = {
+      user: mapUserPayload(user),
+    };
 
     const accessToken = this.jwtService.sign({ user });
-    const refreshToken = this.jwtService.sign({ user }, true);
-    req.session.authToken = { accessToken, refreshToken };
+    const refreshToken = this.jwtService.sign(payload, true);
+    this.authService.resetCurrentHashedToken(user.id, refreshToken);
 
+    this.sendRefreshToken(res, accessToken);
+    res.setHeader('authorization', `Bearer ${accessToken}`);
     res.send({ user: mapUserOutput(user), authToken: { accessToken } });
+  }
+
+  public async refreshToken(req: Request, res: Response) {
+    const refreshToken = req.cookies.jid;
+    if (!refreshToken) {
+      return res.send({ ok: false, accessToken: '' });
+    }
+    let user: UserFromRequest = null;
+    try {
+      user = await this.authService.getUserFromRefreshToken(refreshToken);
+    } catch (err) {
+      console.log(err);
+      return res.send({ ok: false, accessToken: '' });
+    }
+    if (!user) return res.send({ ok: false, accessToken: '' });
+
+    const accessToken = this.jwtService.sign({ user });
+    this.sendRefreshToken(res, accessToken);
+    res.setHeader('authorization', `Bearer ${accessToken}`);
+
+    return { ok: true, accessToken };
+  }
+
+  private sendRefreshToken(res: Response, token: string) {
+    res.cookie('jid', token, {
+      httpOnly: true,
+      path: '/refresh-token',
+    });
   }
 }

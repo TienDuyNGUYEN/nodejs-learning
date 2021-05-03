@@ -29,7 +29,7 @@ export class JwtService {
 
       return decoded as DataStoredFromToken;
     } catch (error) {
-      throw new BadRequestException('Token invalid or missing');
+      throw new BadRequestException('Token invalid');
     }
   }
 }

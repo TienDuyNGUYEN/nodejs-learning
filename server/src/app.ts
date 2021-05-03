@@ -10,6 +10,7 @@ import { errorMiddleware } from '@common/middlewares';
 import notFoundMiddleware from '@common/middlewares/not-found.middleware';
 import { injectable } from 'tsyringe';
 import appRouter from './app.routes';
+import cookieParser from 'cookie-parser';
 
 @injectable()
 export class AppModule {
@@ -33,6 +34,7 @@ export class AppModule {
     this.app.use(compression());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(cookieParser());
 
     this.app.use(cors());
 
@@ -70,26 +72,7 @@ export class AppModule {
       console.log = function () {};
     }
 
-    // Register session
-    const sessionOptions = sessionConfig();
-    this.app.use(session(sessionOptions));
-
     // Init routes
-    // Home route
-    // this.app.get('/', (req, res) => {
-    //   res.send('Hi there!');
-    // });
-
-    // this.app.get('/health', (req, res) => {
-    //   res.status(200).send();
-    // });
-
-    // Loop through all controller of app and initialize router
-    // const appController = container.resolve(AppController);
-
-    // appController.all.forEach((c) => {
-    //   this.app.use('/api', c.router);
-    // });
     this.app.use(appRouter);
 
     // Handle not found error

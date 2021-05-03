@@ -7,11 +7,3 @@ declare module 'express' {
     user?: UserFromRequest;
   }
 }
-declare module 'express-session' {
-  interface SessionData {
-    authToken?: {
-      accessToken?: string;
-      refreshToken?: string;
-    };
-  }
-}
