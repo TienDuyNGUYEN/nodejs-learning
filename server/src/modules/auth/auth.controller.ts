@@ -1,5 +1,7 @@
 import { User } from '.prisma/client';
-import { mapUserOutput } from '@modules/user/utils/map-user.out';
+import { PayloadUserForJwtToken } from '@common/types';
+import { mapUserOutput } from '@modules/user/utils/map-user-output';
+import { mapUserPayload } from '@modules/user/utils/map-user-payload';
 import express from 'express';
 import { injectable } from 'tsyringe';
 import { LoginUserDto, RegisterUserDto } from './dto';
@@ -16,8 +18,12 @@ export class AuthController {
     const input = req.body as LoginUserDto;
     const user: User = await this.authService.loginUser(input);
 
-    const accessToken = this.jwtService.sign({ user });
-    const refreshToken = this.jwtService.sign({ user }, true);
+    const payload: PayloadUserForJwtToken = {
+      user: mapUserPayload(user),
+    };
+
+    const accessToken = this.jwtService.sign(payload);
+    const refreshToken = this.jwtService.sign(payload, true);
     req.session.authToken = { accessToken, refreshToken };
 
     res.send({ user: mapUserOutput(user), authToken: { accessToken } });

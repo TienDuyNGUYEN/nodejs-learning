@@ -1,5 +1,5 @@
 import { UserOutput } from '@common/types';
-import { User } from '@prisma/client';
+import { RoleType, User } from '@prisma/client';
 
 export function mapUserOutput(user: User): UserOutput {
   return {
@@ -8,7 +8,7 @@ export function mapUserOutput(user: User): UserOutput {
     lastName: user.lastName,
     username: user.username,
     email: user.email,
-    role: user.role,
+    role: user.role as RoleType,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
   };

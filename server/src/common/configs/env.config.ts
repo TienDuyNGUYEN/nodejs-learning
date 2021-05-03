@@ -20,6 +20,7 @@ export const envConfig = (): EnvConfig => {
     cookieSecret: process.env.COOKIE_SECRET || `some-very-strong-secret`,
     jwt: {
       jwtSecret: process.env.JWT_SECRET || `some-very-strong-secret`,
+      jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || `some-very-strong-secret`,
       jwtExpiredTime: parseInt(process.env.JWT_EXPIRED_TIME) || 7200,
       jwtRefreshExpiredTime: parseInt(process.env.JWT_REFRESH_EXPIRED_TIME) || 2592000,
     },
@@ -40,6 +41,7 @@ export interface EnvConfig {
   cookieSecret: string;
   jwt: {
     jwtSecret: string;
+    jwtRefreshSecret: string;
     jwtExpiredTime: number;
     jwtRefreshExpiredTime: number;
   };

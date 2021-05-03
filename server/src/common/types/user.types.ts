@@ -1,3 +1,5 @@
+import { RoleType } from '@prisma/client';
+
 export const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 export interface UserOutput {
@@ -6,7 +8,7 @@ export interface UserOutput {
   lastName?: string;
   username: string;
   email: string;
-  role: string;
+  role: RoleType;
   createdAt: Date;
   updatedAt: Date;
 }

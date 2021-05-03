@@ -22,7 +22,6 @@ export interface UserFromRequest extends Partial<User> {
   role?: RoleType;
   email?: string;
   username?: string;
-  password?: string;
 }
 export interface SessionAuthToken {
   authToken?: IAuthToken;
