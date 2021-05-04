@@ -39,8 +39,10 @@ export class AuthService {
   public async getUserFromRefreshToken(refreshToken: string): Promise<User | UserFromRequest> {
     const { user } = this.jwtService.verify(refreshToken, true);
     if (!user) return null;
+    const realUser = await this._db.user.findUnique({ where: { id: user.id } });
+    if (!realUser) return null;
 
-    const isMatch = await this.passwordService.verify(user.currentHashedRefreshToken, refreshToken);
+    const isMatch = await this.passwordService.verify(realUser.currentHashedRefreshToken, refreshToken);
     if (!isMatch) return null;
     return user;
   }

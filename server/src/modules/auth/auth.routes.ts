@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 import { AuthController } from './auth.controller';
 import handler from 'express-async-handler';
 import { LoginUserDto, RegisterUserDto } from './dto';
+import { authMiddleware } from '@common/middlewares';
 
 const authRouter = express.Router();
 
@@ -24,6 +25,15 @@ authRouter.post(
   handler((req, res) => {
     const authController = container.resolve(AuthController);
     authController.register(req, res);
+  }),
+);
+
+// refresh token
+authRouter.post(
+  '/auth/refresh-token',
+  handler((req, res) => {
+    const authController = container.resolve(AuthController);
+    authController.refreshToken(req, res);
   }),
 );
 

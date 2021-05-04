@@ -25,7 +25,7 @@ export class AuthController {
     const accessToken = this.jwtService.sign(payload);
     const refreshToken = this.jwtService.sign(payload, true);
     this.authService.resetCurrentHashedToken(user.id, refreshToken);
-    this.sendRefreshToken(res, accessToken);
+    this.sendRefreshToken(res, refreshToken);
     res.setHeader('authorization', `Bearer ${accessToken}`);
     res.send({ user: mapUserOutput(user), authToken: { accessToken } });
   }
@@ -41,13 +41,14 @@ export class AuthController {
     const refreshToken = this.jwtService.sign(payload, true);
     this.authService.resetCurrentHashedToken(user.id, refreshToken);
 
-    this.sendRefreshToken(res, accessToken);
+    this.sendRefreshToken(res, refreshToken);
     res.setHeader('authorization', `Bearer ${accessToken}`);
     res.send({ user: mapUserOutput(user), authToken: { accessToken } });
   }
 
   public async refreshToken(req: Request, res: Response) {
     const refreshToken = req.cookies.jid;
+    console.log(refreshToken);
     if (!refreshToken) {
       return res.send({ ok: false, accessToken: '' });
     }
@@ -61,16 +62,16 @@ export class AuthController {
     if (!user) return res.send({ ok: false, accessToken: '' });
 
     const accessToken = this.jwtService.sign({ user });
-    this.sendRefreshToken(res, accessToken);
     res.setHeader('authorization', `Bearer ${accessToken}`);
 
-    return { ok: true, accessToken };
+    return res.send({ ok: true, accessToken });
   }
 
+  //------------------------- private------------------------------------
   private sendRefreshToken(res: Response, token: string) {
     res.cookie('jid', token, {
       httpOnly: true,
-      path: '/refresh-token',
+      path: '/api/auth/refresh-token',
     });
   }
 }

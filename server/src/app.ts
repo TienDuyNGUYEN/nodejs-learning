@@ -3,8 +3,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import RateLimit from 'express-rate-limit';
-import session from 'express-session';
-import { sessionConfig } from './common/configs/session.config';
 import { envConfig } from './common/configs/env.config';
 import { errorMiddleware } from '@common/middlewares';
 import notFoundMiddleware from '@common/middlewares/not-found.middleware';
@@ -34,7 +32,7 @@ export class AppModule {
     this.app.use(compression());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
-    this.app.use(cookieParser());
+    this.app.use(cookieParser(this.env.cookieSecret));
 
     this.app.use(cors());
 
