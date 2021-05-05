@@ -10,6 +10,7 @@ import { injectable } from 'tsyringe';
 import appRouter from './app.routes';
 import cookieParser from 'cookie-parser';
 
+//global app
 @injectable()
 export class AppModule {
   private env = envConfig();
