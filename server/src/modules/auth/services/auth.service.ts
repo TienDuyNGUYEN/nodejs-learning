@@ -10,15 +10,15 @@ import { JwtService } from './jwt.service';
 @injectable()
 export class AuthService {
   private _db: PrismaClient;
+
   constructor(prismaService: PrismaService, private passwordService: PasswordService, private jwtService: JwtService) {
     this._db = prismaService.client;
   }
 
   public async registerUser(input: RegisterUserDto): Promise<User> {
-    const user = await this._db.user.create({
+    return this._db.user.create({
       data: { ...input, password: await this.passwordService.hash(input.password) },
     });
-    return user;
   }
 
   public async loginUser(input: LoginUserDto): Promise<User> {
@@ -46,13 +46,13 @@ export class AuthService {
     if (!isMatch) return null;
     return user;
   }
+
   public async resetCurrentHashedToken(userId: string, refreshToken: string) {
-    const user = await this._db.user.update({
+    return this._db.user.update({
       where: { id: userId },
       data: {
         currentHashedRefreshToken: await this.passwordService.hash(refreshToken),
       },
     });
-    return user;
   }
 }

@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { BadRequestException } from 'src/common/exceptions';
 import { DataStoredFromToken, PayloadUserForJwtToken } from 'src/common/types';
 import { envConfig } from 'src/common/configs/env.config';
+
 @injectable()
 export class JwtService {
   private jwtEnv = envConfig().jwt;
