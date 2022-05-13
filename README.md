@@ -1,3 +1,2 @@
-# Training management
+# Esbuild swc demo
 
-Training management system Nodejs-React (TypeScript)
