@@ -1,0 +1,22 @@
+{
+  "name": "@demo/esbuild-koa",
+  "version": "1.0.0",
+  "description": "Using esbuild in nodejs",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "watch-compile": "node scripts/watch-compile.js",
+    "watch-dev": "nodemon --watch \"dist/**/*\" -e js ./dist/app.js",
+    "dev": "concurrently \"npm run watch-compile\" \"npm run watch-dev\"",
+    "build": "node scripts/build.js",
+    "start": "NODE_ENV=production node dist/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fast-glob": "^3.2.11"
+  },
+  "devDependencies": {
+    "esbuild": "^0.14.46"
+  }
+}

@@ -69,3 +69,4 @@ chrome-user-data
 .env.development
 .env.production
 .env.test
+.pnpm*
