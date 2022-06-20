@@ -1,20 +1,20 @@
 {
   "name": "@demo/swc-koa",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Demo swc in nodejs",
   "scripts": {
-    "dev": "concurrently \"npm run watch-compile\" \"npm run watch-dev\"",
+    "clean": "rm -rf dist",
     "watch-compile": "swc src -w --out-dir dist",
-    "watch-dev": "nodemon --watch \"dist/**/*\" -e js ./dist/main.js",
+    "watch-dev": "nodemon --watch \"dist/**/*\" -e js ./dist/app.js",
     "build": "swc src -d dist",
-    "start": "NODE_ENV=production node dist/main.js",
-    "clean": "rm -rf dist"
+    "dev": "concurrently \"npm run watch-compile\" \"npm run watch-dev\"",
+    "start": "NODE_ENV=production node dist/app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-
+  "devDependencies": {
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.204"
   }
 }
